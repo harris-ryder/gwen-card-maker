@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center items-center max-w-5xl mx-auto mt-8">
-      {cardIds.slice(0, 10).map((cardId) => (
+      {cardIds.slice(0, 1).map((cardId) => (
         <AssembledCard key={cardId} cardId={cardId} />
       ))}
     </div>
