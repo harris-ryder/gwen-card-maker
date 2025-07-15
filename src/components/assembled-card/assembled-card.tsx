@@ -66,7 +66,7 @@ const AssembledCard: React.FC<{
             aria-hidden="true"
           />
         )}
-        <Overlay name={name} />
+        <Overlay name={name} category={category} />
       </div>
     </div>
   );
