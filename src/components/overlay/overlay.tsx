@@ -2,7 +2,10 @@ import React from "react";
 
 const Overlay: React.FC<{ name: string }> = ({ name }) => {
   return (
-    <div className="absolute inset-0 pointer-events-none z-50">
+    <div
+      className="absolute inset-0 pointer-events-none"
+      style={{ zIndex: 99 }}
+    >
       <div className="relative w-full h-full flex justify-center">
         <header
           className="absolute top-4 px-3 py-1 text-xs font-semibold text-center text-white"

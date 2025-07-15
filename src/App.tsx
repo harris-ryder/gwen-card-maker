@@ -46,7 +46,7 @@ function App() {
 
   return (
     <>
-      <div className="sticky top-0 bg-white z-10 p-4 shadow-md">
+      <div className="sticky top-0 bg-white p-4 shadow-md z-100">
         <input
           type="text"
           placeholder="Filter by card name..."
@@ -57,13 +57,13 @@ function App() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center items-center max-w-5xl mx-auto mt-8">
         {filteredCards.slice(0, 10).map((cardId) => (
-        <AssembledCard
-          key={cardId.id}
-          cardId={cardId.id}
-          category={cardId.category}
-          name={cardId.name}
-        />
-      ))}
+          <AssembledCard
+            key={cardId.id}
+            cardId={cardId.id}
+            category={cardId.category}
+            name={cardId.name}
+          />
+        ))}
       </div>
     </>
   );
