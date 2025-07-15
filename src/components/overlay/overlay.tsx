@@ -10,10 +10,10 @@ const Overlay: React.FC<{ name: string }> = ({ name }) => {
             width: "90%",
             borderRadius: "5% / 100%",
             boxSizing: "border-box",
-            border: "0.15em solid #e02a31",
+            border: "0.15em solid #F6D263",
             boxShadow:
-              "0 -0.15em 0 -0.05em #e02a31, -0.2em 0 0.1em #0008, 0.1em 0 0.05em #0006, inset 0 0 0 0.1em #0008, inset 0.3em -0.3em 0.1em #0003",
-            background: "#f3c6b8",
+              "-0.2em 0 0.1em #0008, 0.1em 0 0.05em #0006, inset 0 0 0 0.1em #0008, inset 0.3em -0.3em 0.1em #0003",
+            background: "rgba(246, 210, 99, 0.5)",
           }}
         >
           {name}
