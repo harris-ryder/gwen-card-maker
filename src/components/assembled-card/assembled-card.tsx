@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-const AssembledCard: React.FC<{ cardId: string }> = ({ cardId }) => {
+const AssembledCard: React.FC<{
+  cardId: string;
+  category: string;
+  name: string;
+}> = ({ cardId, category, name }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
@@ -28,6 +32,8 @@ const AssembledCard: React.FC<{ cardId: string }> = ({ cardId }) => {
 
   return (
     <div className="max-w-sm  overflow-hidden  p-6">
+      <h2 className="text-xl font-bold mb-2">{name}</h2>
+      <p className="text-sm text-gray-500 mb-2">{category}</p>
       <div style={{ position: "relative", width: "100%" }}>
         {imageUrls.map((url, idx) => (
           <img
