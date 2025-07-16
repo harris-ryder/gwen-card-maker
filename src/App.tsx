@@ -38,10 +38,7 @@ function App() {
         // Use the Card type for better type safety
         const response = Object.values(data.response) as ApiResponse[];
         console.log("response", Object.values(data.response).slice(0, 1));
-        const newCards = response.filter((card) =>
-          card.name.toLowerCase().includes("yen".toLowerCase())
-        );
-        setCards(newCards);
+        setCards(response);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

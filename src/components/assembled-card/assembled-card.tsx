@@ -26,7 +26,61 @@ const AssembledCard: React.FC<{
             console.log("Image found:", img.src);
           }
         });
-        setImageUrls(urls);
+
+        // If no images found, construct URLs from card attributes
+        if (urls.length === 0) {
+          const constructedUrls: string[] = [];
+
+          // Add art URL if available
+          if (card.id.art) {
+            constructedUrls.push(
+              `https://gwent.one/image/gwent/assets/card/art/medium/${card.id.art}.jpg`
+            );
+          }
+
+          // Add border URL based on color
+          if (card.attributes.color) {
+            constructedUrls.push(
+              `https://gwent.one/image/gwent/assets/card/other/medium/border_${card.attributes.color.toLowerCase()}.png`
+            );
+          }
+
+          // Add provision banner URL
+          constructedUrls.push(
+            `https://gwent.one/image/gwent/assets/card/banner/medium/provision_${card.attributes.faction.toLowerCase()}.png`
+          );
+
+          // Add provision number
+          if (card.attributes.provision) {
+            constructedUrls.push(
+              `https://gwent.one/image/gwent/assets/card/number/medium/provision_${card.attributes.provision}.png`
+            );
+          }
+
+          // Add rarity URL
+          if (card.attributes.rarity) {
+            constructedUrls.push(
+              `https://gwent.one/image/gwent/assets/card/other/medium/rarity_${card.attributes.rarity.toLowerCase()}.png`
+            );
+          }
+          // Add faction banner URL
+          if (card.attributes.faction) {
+            constructedUrls.push(
+              `https://gwent.one/image/gwent/assets/card/banner/medium/default_${card.attributes.faction.toLowerCase()}.png`
+            );
+          }
+
+          // Add power number URL if power > 0
+          if (card.attributes.power > 0) {
+            constructedUrls.push(
+              `https://gwent.one/image/gwent/assets/card/number/medium/power_${card.attributes.power}.png`
+            );
+          }
+
+          setImageUrls(constructedUrls);
+        } else {
+          setImageUrls(urls);
+        }
       });
   }, [card.id.card]);
 
