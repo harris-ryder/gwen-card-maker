@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Overlay from "../overlay/overlay";
 import type { ApiResponse } from "../../App";
+import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
 
 const AssembledCard: React.FC<{
   card: ApiResponse;
@@ -9,6 +10,7 @@ const AssembledCard: React.FC<{
   onRemoveFromDeck: (cardId: string) => void;
 }> = ({ card, isInDeck, onAddToDeck, onRemoveFromDeck }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
   const [headerTextColor, setHeaderTextColor] = useState<"white" | "black">(
     "white"
   );
@@ -18,6 +20,12 @@ const AssembledCard: React.FC<{
   const [descriptionTextColor, setDescriptionTextColor] = useState<
     "black" | "white"
   >("black");
+
+  const { elementRef, isIntersecting } = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: "100px",
+    triggerOnce: true,
+  });
 
   useEffect(() => {
     const savedHeaderColor = localStorage.getItem(
@@ -66,6 +74,8 @@ const AssembledCard: React.FC<{
   };
 
   useEffect(() => {
+    if (!isIntersecting) return;
+
     // Fetch card data using the provided cardId
     fetch(
       `https://api.gwent.one/?key=data&id=${card.id.card}&response=html&html=version.artsize.linkart&class=rounded&version=1.1.0`
@@ -139,11 +149,13 @@ const AssembledCard: React.FC<{
         } else {
           setImageUrls(urls);
         }
+        setImagesLoaded(true);
       });
-  }, [card.id.card]);
+  }, [card.id.card, isIntersecting]);
 
   return (
     <div
+      ref={elementRef}
       className="relative w-[2.5in] h-[3.5in] bg-black print:bg-black transition-all duration-200 group"
       style={{
         WebkitPrintColorAdjust: "exact",
@@ -151,7 +163,17 @@ const AssembledCard: React.FC<{
       }}
       title={card.id.card}
     >
-      {imageUrls.map((url, idx) => (
+      {!imagesLoaded && isIntersecting && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+        </div>
+      )}
+      {!isIntersecting && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+          <div className="text-gray-500 text-sm">Loading...</div>
+        </div>
+      )}
+      {imagesLoaded && imageUrls.map((url, idx) => (
         <img
           key={idx}
           src={url}

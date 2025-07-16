@@ -121,7 +121,7 @@ function App() {
         </div>
       </div>
       <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 print:gap-0 justify-items-center items-center w-fit mx-auto mt-8 print:ml-0 print:mt-0">
-        {filteredCards.slice(0, 50).map((card, idx) => (
+        {filteredCards.map((card, idx) => (
           <>
             <AssembledCard
               key={card.id.card}
