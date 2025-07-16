@@ -4,7 +4,10 @@ const Overlay: React.FC<{
   name: string;
   category: string;
   ability_html: string;
-}> = ({ name, category, ability_html }) => {
+  headerTextColor?: 'white' | 'black';
+  categoryTextColor?: 'white' | 'black';
+  descriptionTextColor?: 'black' | 'white';
+}> = ({ name, category, ability_html, headerTextColor = 'white', categoryTextColor = 'black', descriptionTextColor = 'black' }) => {
   return (
     <div
       className="absolute inset-0 pointer-events-none print:absolute"
@@ -12,7 +15,7 @@ const Overlay: React.FC<{
     >
       <div className="relative w-full h-full flex justify-center print:h-[3.5in]">
         <header
-          className="absolute top-4 px-3 py-1 text-xs font-semibold text-center text-white"
+          className={`absolute top-4 px-3 py-1 text-xs font-semibold text-center ${headerTextColor === 'white' ? 'text-white' : 'text-black'}`}
           style={{
             width: "90%",
             borderRadius: "5% / 100%",
@@ -32,7 +35,7 @@ const Overlay: React.FC<{
         </header>
         <div className="absolute bottom-4 px-3 py-1 text-xs font-semibold text-center text-black flex flex-col gap-0 w-full print:bottom-2">
           <div
-            className="py-1 text-xs font-semibold text-center text-black w-full"
+            className={`py-1 text-xs font-semibold text-center w-full ${categoryTextColor === 'white' ? 'text-white' : 'text-black'}`}
             style={{
               borderRadius: "5% / 100%",
               boxSizing: "border-box",
@@ -50,7 +53,7 @@ const Overlay: React.FC<{
           </div>
           {ability_html && (
             <div
-              className="px-3 py-2 text-[10px] rounded-t-none font-light text-black rounded-sm w-[95%] mx-auto"
+              className={`px-3 py-2 text-[10px] rounded-t-none font-light rounded-sm w-[95%] mx-auto ${descriptionTextColor === 'black' ? 'text-black' : 'text-white'}`}
               style={{
                 border: "0.15em solid #F6D263",
                 borderTop: 0,
