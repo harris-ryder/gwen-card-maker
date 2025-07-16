@@ -11,8 +11,6 @@ const AssembledCard: React.FC<{
 }> = ({ card, isInDeck, onAddToDeck, onRemoveFromDeck }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [headerTextColor, setHeaderTextColor] = useState<"white" | "black">(
     "white"
@@ -189,11 +187,9 @@ const AssembledCard: React.FC<{
           style={{ zIndex: 1 }}
           onLoadedData={() => {
             console.log(`Video loaded for card ${card.id.card}`);
-            setVideoLoaded(true);
           }}
           onError={(e) => {
             console.log(`Video error for card ${card.id.card}:`, e);
-            setVideoError(true);
           }}
           onLoadStart={() => {
             console.log(`Video loading started for card ${card.id.card}`);
