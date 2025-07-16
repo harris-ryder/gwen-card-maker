@@ -164,21 +164,21 @@ const AssembledCard: React.FC<{
       <div className="absolute z-[9999] top-2 right-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <button
           onClick={toggleHeaderColor}
-          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between"
+          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2"
           title="Toggle header text color"
         >
           Header: <span>{headerTextColor === "white" ? "⚪" : "⚫"}</span>
         </button>
         <button
           onClick={toggleCategoryColor}
-          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between"
+          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2"
           title="Toggle category text color"
         >
           Category: <span> {categoryTextColor === "white" ? "⚪" : "⚫"}</span>
         </button>
         <button
           onClick={toggleDescriptionColor}
-          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between"
+          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2"
           title="Toggle description text color"
         >
           Description:{" "}
