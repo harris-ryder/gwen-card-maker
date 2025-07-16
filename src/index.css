@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+/* in your CSS */
+@media print {
+  .break-after-page {
+    break-after: page;
+  }
+}

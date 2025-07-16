@@ -49,8 +49,6 @@ function App() {
     card.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  console.log("description", filteredCards);
-
   return (
     <>
       <div className="sticky top-0 bg-white p-4 shadow-md z-100 print:hidden">
@@ -63,8 +61,17 @@ function App() {
         />
       </div>
       <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 print:gap-0 justify-items-center items-center w-fit mx-auto mt-8 print:ml-0 print:mt-0">
-        {filteredCards.slice(0, 10).map((card) => (
-          <AssembledCard key={card.id.card} card={card} />
+        {filteredCards.slice(0, 300).map((card, idx) => (
+          <>
+            <AssembledCard key={card.id.card} card={card} />
+            {(idx + 1) % 9 === 0 && (
+              <div
+                key={`break-${idx}`}
+                className="w-full col-span-full break-after-page print:break-after-page"
+                style={{ height: 0 }}
+              />
+            )}
+          </>
         ))}
       </div>
     </>
