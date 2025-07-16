@@ -5,7 +5,9 @@ const AssembledCard: React.FC<{
   cardId: string;
   category: string;
   name: string;
-}> = ({ cardId, category, name }) => {
+  ability_html: string;
+  keyword_html: string;
+}> = ({ cardId, category, name, ability_html, keyword_html }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
@@ -66,7 +68,12 @@ const AssembledCard: React.FC<{
             aria-hidden="true"
           />
         )}
-        <Overlay name={name} category={category} />
+        <Overlay 
+          name={name} 
+          category={category}
+          ability_html={ability_html}
+          keyword_html={keyword_html}
+        />
       </div>
     </div>
   );

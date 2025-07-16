@@ -8,20 +8,24 @@ type ApiResponse = {
   };
   category: string;
   name: string;
+  ability_html: string;
+  keyword_html: string;
 };
 
 type Card = {
   id: string;
   category: string;
   name: string;
+  ability_html: string;
+  keyword_html: string;
 };
 
 function App() {
-  const [cardIds, setCardIds] = useState<Card[]>([]);
+  const [cards, setCards] = useState<Card[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("https://api.gwent.one/?key=data&version=1.0.0.15&audio=1")
+    fetch("https://api.gwent.one/?key=data&version=13.0.0.15&audio=1")
       .then((response) => response.json())
       .then((data) => {
         // Use the Card type for better type safety
@@ -31,18 +35,30 @@ function App() {
           id: card.id.card,
           category: card.category,
           name: card.name,
+          ability_html: card.ability_html,
+          keyword_html: card.keyword_html,
         }));
         console.log(response.slice(0, 10));
-        setCardIds(cardIds);
+
+        console.log(
+          "triss",
+          Object.values(data.response).filter((card) =>
+            card.name.toLowerCase().includes("triss".toLowerCase())
+          )
+        );
+
+        setCards(cardIds);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
 
-  const filteredCards = cardIds.filter((card) =>
+  const filteredCards = cards.filter((card) =>
     card.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  console.log("description", filteredCards);
 
   return (
     <>
@@ -62,6 +78,8 @@ function App() {
             cardId={cardId.id}
             category={cardId.category}
             name={cardId.name}
+            ability_html={cardId.ability_html}
+            keyword_html={cardId.keyword_html}
           />
         ))}
       </div>
