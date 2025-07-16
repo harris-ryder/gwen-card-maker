@@ -144,7 +144,7 @@ const AssembledCard: React.FC<{
 
   return (
     <div
-      className="relative w-[2.5in] h-[3.5in] bg-black print:bg-black hover:brightness-75 transition-all duration-200 group"
+      className="relative w-[2.5in] h-[3.5in] bg-black print:bg-black transition-all duration-200 group"
       style={{
         WebkitPrintColorAdjust: "exact",
         printColorAdjust: "exact",
@@ -156,7 +156,7 @@ const AssembledCard: React.FC<{
           key={idx}
           src={url}
           alt={`Card art ${idx + 1}`}
-          className="w-full h-full object-contain absolute inset-0 pointer-events-none print:object-contain"
+          className="w-full h-full object-contain absolute inset-0 pointer-events-none print:object-contain group-hover:brightness-75 transition-all duration-200"
           style={{
             zIndex: idx,
           }}
@@ -173,10 +173,10 @@ const AssembledCard: React.FC<{
       <div className="absolute z-[9999] top-2 left-2 bg-black bg-opacity-80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
         {card.id.card}
       </div>
-      <div className="absolute z-[9999] top-2 right-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div className="absolute z-[99999] top-2 right-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <button
           onClick={handleDeckToggle}
-          className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+          className={`px-2 py-1 rounded text-xs font-medium transition-colors cursor-pointer ${
             isInDeck
               ? "bg-red-600 hover:bg-red-700 text-white"
               : "bg-green-600 hover:bg-green-700 text-white"
@@ -187,21 +187,21 @@ const AssembledCard: React.FC<{
         </button>
         <button
           onClick={toggleHeaderColor}
-          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2"
+          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2 cursor-pointer"
           title="Toggle header text color"
         >
           Header: <span>{headerTextColor === "white" ? "⚪" : "⚫"}</span>
         </button>
         <button
           onClick={toggleCategoryColor}
-          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2"
+          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2 cursor-pointer"
           title="Toggle category text color"
         >
           Category: <span> {categoryTextColor === "white" ? "⚪" : "⚫"}</span>
         </button>
         <button
           onClick={toggleDescriptionColor}
-          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2"
+          className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2 cursor-pointer"
           title="Toggle description text color"
         >
           Description:{" "}

@@ -78,9 +78,9 @@ function App() {
 
   return (
     <>
-      <div className="sticky top-0 bg-white p-4 shadow-md z-100 print:hidden flex items-center justify-between">
+      <div className="sticky top-0 bg-white p-4 shadow-md z-100 print:hidden flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <h1
-          className="text-2xl font-bold text-gray-800"
+          className="text-2xl font-bold text-gray-800 text-center lg:text-left"
           style={{
             fontFamily: "'Cinzel', 'Playfair Display', 'Georgia', serif",
             letterSpacing: "0.05em",
@@ -88,7 +88,7 @@ function App() {
         >
           The voice of Gwent
         </h1>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
           <div className="flex flex-nowrap bg-gray-100 rounded-md p-1 w-fit">
             <button
               onClick={() => setViewMode("all")}
