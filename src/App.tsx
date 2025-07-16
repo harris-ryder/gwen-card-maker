@@ -62,7 +62,7 @@ function App() {
 
   return (
     <>
-      <div className="sticky top-0 bg-white p-4 shadow-md z-100">
+      <div className="sticky top-0 bg-white p-4 shadow-md z-100 print:hidden">
         <input
           type="text"
           placeholder="Filter by card name..."
@@ -71,7 +71,7 @@ function App() {
           className="w-full max-w-md mx-auto block px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0 justify-items-center items-center w-fit mx-auto mt-8">
+      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 print:gap-0 justify-items-center items-center w-fit mx-auto mt-8 print:ml-0 print:mt-0">
         {filteredCards.slice(0, 10).map((cardId) => (
           <AssembledCard
             key={cardId.id}

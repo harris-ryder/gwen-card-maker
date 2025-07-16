@@ -34,13 +34,19 @@ const AssembledCard: React.FC<{
   }, [cardId]);
 
   return (
-    <div className="relative w-[2.5in] h-[3.5in] border border-red-500 bg-black">
+    <div
+      className="relative w-[2.5in] h-[3.5in] bg-black print:bg-black"
+      style={{
+        WebkitPrintColorAdjust: "exact",
+        printColorAdjust: "exact",
+      }}
+    >
       {imageUrls.map((url, idx) => (
         <img
           key={idx}
           src={url}
           alt={`Card art ${idx + 1}`}
-          className="w-full h-full object-contain absolute inset-0 pointer-events-none"
+          className="w-full h-full object-contain absolute inset-0 pointer-events-none print:object-contain"
           style={{
             zIndex: idx,
           }}
