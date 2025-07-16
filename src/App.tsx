@@ -5,6 +5,7 @@ import AssembledCard from "./components/assembled-card/assembled-card";
 type ApiResponse = {
   id: {
     card: string;
+    art: string;
   };
   category: string;
   name: string;
