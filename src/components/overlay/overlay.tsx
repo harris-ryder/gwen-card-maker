@@ -4,10 +4,12 @@ const Overlay: React.FC<{
   name: string;
   category: string;
   ability_html: string;
-  keyword_html: string;
-}> = ({ name, category, ability_html, keyword_html }) => {
+}> = ({ name, category, ability_html }) => {
   return (
-    <div className="absolute inset-0 pointer-events-none print:absolute" style={{ zIndex: 4 }}>
+    <div
+      className="absolute inset-0 pointer-events-none print:absolute"
+      style={{ zIndex: 4 }}
+    >
       <div className="relative w-full h-full flex justify-center print:h-[3.5in]">
         <header
           className="absolute top-4 px-3 py-1 text-xs font-semibold text-center text-white"
@@ -46,7 +48,7 @@ const Overlay: React.FC<{
           >
             {category}
           </div>
-          {(ability_html || keyword_html) && (
+          {ability_html && (
             <div
               className="px-3 py-2 text-[10px] rounded-t-none font-light text-black rounded-sm w-[95%] mx-auto"
               style={{

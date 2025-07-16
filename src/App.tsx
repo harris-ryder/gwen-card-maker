@@ -2,27 +2,33 @@ import { useEffect, useState } from "react";
 import AssembledCard from "./components/assembled-card/assembled-card";
 
 // Define a type for the card object with only the id property
-type ApiResponse = {
+export type ApiResponse = {
   id: {
     card: string;
-    art: string;
+    art: string; // e.g. https://gwent.one/image/gwent/assets/card/art/medium/1019.jpg
   };
   category: string;
   name: string;
   ability_html: string;
   keyword_html: string;
-};
-
-type Card = {
-  id: string;
-  category: string;
-  name: string;
-  ability_html: string;
-  keyword_html: string;
+  attributes: {
+    armor: number;
+    artist: string;
+    color: string; // border_  e.g. https://gwent.one/image/gwent/assets/card/other/medium/border_gold.png
+    faction: string; // default_ e.g. https://gwent.one/image/gwent/assets/card/banner/medium/default_neutral.png
+    factionSecondary: string;
+    power: number; // power_ e.g. https://gwent.one/image/gwent/assets/card/number/medium/power_5.png
+    provision: number; // provision_ e.g. https://gwent.one/image/gwent/assets/card/banner/medium/provision_neutral.png
+    rarity: string; // rarity_ e.g. https://gwent.one/image/gwent/assets/card/other/medium/rarity_legendary.png
+    reach: number;
+    related: string;
+    set: string;
+    type: string;
+  };
 };
 
 function App() {
-  const [cards, setCards] = useState<Card[]>([]);
+  const [cards, setCards] = useState<ApiResponse[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -31,24 +37,11 @@ function App() {
       .then((data) => {
         // Use the Card type for better type safety
         const response = Object.values(data.response) as ApiResponse[];
-        console.log("response", data.response);
-        const cardIds = response.map((card) => ({
-          id: card.id.card,
-          category: card.category,
-          name: card.name,
-          ability_html: card.ability_html,
-          keyword_html: card.keyword_html,
-        }));
-        console.log(response.slice(0, 10));
-
-        console.log(
-          "triss",
-          Object.values(data.response).filter((card) =>
-            card.name.toLowerCase().includes("triss".toLowerCase())
-          )
+        console.log("response", Object.values(data.response).slice(0, 1));
+        const newCards = response.filter((card) =>
+          card.name.toLowerCase().includes("yen".toLowerCase())
         );
-
-        setCards(cardIds);
+        setCards(newCards);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -73,15 +66,8 @@ function App() {
         />
       </div>
       <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 print:gap-0 justify-items-center items-center w-fit mx-auto mt-8 print:ml-0 print:mt-0">
-        {filteredCards.slice(0, 10).map((cardId) => (
-          <AssembledCard
-            key={cardId.id}
-            cardId={cardId.id}
-            category={cardId.category}
-            name={cardId.name}
-            ability_html={cardId.ability_html}
-            keyword_html={cardId.keyword_html}
-          />
+        {filteredCards.slice(0, 10).map((card) => (
+          <AssembledCard key={card.id.card} card={card} />
         ))}
       </div>
     </>

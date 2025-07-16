@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Overlay from "../overlay/overlay";
+import type { ApiResponse } from "../../App";
 
 const AssembledCard: React.FC<{
-  cardId: string;
-  category: string;
-  name: string;
-  ability_html: string;
-  keyword_html: string;
-}> = ({ cardId, category, name, ability_html, keyword_html }) => {
+  card: ApiResponse;
+}> = ({ card }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
     // Fetch card data using the provided cardId
     fetch(
-      `https://api.gwent.one/?key=data&id=${cardId}&response=html&html=version.artsize.linkart&class=rounded&version=1.1.0`
+      `https://api.gwent.one/?key=data&id=${card.id.card}&response=html&html=version.artsize.linkart&class=rounded&version=1.1.0`
     )
       .then((response) => response.text())
       .then((html) => {
@@ -31,7 +28,9 @@ const AssembledCard: React.FC<{
         });
         setImageUrls(urls);
       });
-  }, [cardId]);
+  }, [card.id.card]);
+
+  console.log(card.name, card);
 
   return (
     <div
@@ -53,10 +52,9 @@ const AssembledCard: React.FC<{
         />
       ))}
       <Overlay
-        name={name}
-        category={category}
-        ability_html={ability_html}
-        keyword_html={keyword_html}
+        name={card.name}
+        category={card.category}
+        ability_html={card.ability_html}
       />
     </div>
   );
