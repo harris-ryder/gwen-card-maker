@@ -71,7 +71,7 @@ function App() {
           className="w-full max-w-md mx-auto block px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-items-center items-center max-w-5xl mx-auto mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0 justify-items-center items-center w-fit mx-auto mt-8">
         {filteredCards.slice(0, 10).map((cardId) => (
           <AssembledCard
             key={cardId.id}
