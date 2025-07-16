@@ -4,7 +4,10 @@ import type { ApiResponse } from "../../App";
 
 const AssembledCard: React.FC<{
   card: ApiResponse;
-}> = ({ card }) => {
+  isInDeck: boolean;
+  onAddToDeck: (cardId: string) => void;
+  onRemoveFromDeck: (cardId: string) => void;
+}> = ({ card, isInDeck, onAddToDeck, onRemoveFromDeck }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [headerTextColor, setHeaderTextColor] = useState<"white" | "black">(
     "white"
@@ -51,6 +54,15 @@ const AssembledCard: React.FC<{
     const newColor = descriptionTextColor === "black" ? "white" : "black";
     setDescriptionTextColor(newColor);
     localStorage.setItem(`card-${card.id.card}-description-color`, newColor);
+  };
+
+  const handleDeckToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isInDeck) {
+      onRemoveFromDeck(card.id.card);
+    } else {
+      onAddToDeck(card.id.card);
+    }
   };
 
   useEffect(() => {
@@ -162,6 +174,17 @@ const AssembledCard: React.FC<{
         {card.id.card}
       </div>
       <div className="absolute z-[9999] top-2 right-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        <button
+          onClick={handleDeckToggle}
+          className={`px-2 py-1 rounded text-xs font-medium transition-colors ${
+            isInDeck
+              ? "bg-red-600 hover:bg-red-700 text-white"
+              : "bg-green-600 hover:bg-green-700 text-white"
+          }`}
+          title={isInDeck ? "Remove from deck" : "Add to deck"}
+        >
+          {isInDeck ? "Remove from Deck" : "+ Add to Deck"}
+        </button>
         <button
           onClick={toggleHeaderColor}
           className="bg-gray-800 bg-opacity-90 text-white px-2 py-1 rounded text-xs hover:bg-opacity-100 flex items-center justify-between gap-2"

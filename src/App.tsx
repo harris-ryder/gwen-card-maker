@@ -30,6 +30,29 @@ export type ApiResponse = {
 function App() {
   const [cards, setCards] = useState<ApiResponse[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [viewMode, setViewMode] = useState<"all" | "deck">("all");
+  const [deckCards, setDeckCards] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const savedDeck = localStorage.getItem("gwent-deck");
+    if (savedDeck) {
+      setDeckCards(new Set(JSON.parse(savedDeck)));
+    }
+  }, []);
+
+  const addToDeck = (cardId: string) => {
+    const newDeck = new Set(deckCards);
+    newDeck.add(cardId);
+    setDeckCards(newDeck);
+    localStorage.setItem("gwent-deck", JSON.stringify(Array.from(newDeck)));
+  };
+
+  const removeFromDeck = (cardId: string) => {
+    const newDeck = new Set(deckCards);
+    newDeck.delete(cardId);
+    setDeckCards(newDeck);
+    localStorage.setItem("gwent-deck", JSON.stringify(Array.from(newDeck)));
+  };
 
   useEffect(() => {
     fetch("https://api.gwent.one/?key=data&version=13.0.0.15&audio=1")
@@ -45,26 +68,68 @@ function App() {
       });
   }, []);
 
-  const filteredCards = cards.filter((card) =>
-    card.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredCards = cards.filter((card) => {
+    const matchesSearch = card.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesView = viewMode === "all" || deckCards.has(card.id.card);
+    return matchesSearch && matchesView;
+  });
 
   return (
     <>
       <div className="sticky top-0 bg-white p-4 shadow-md z-100 print:hidden flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-800" style={{ fontFamily: "'Cinzel', 'Playfair Display', 'Georgia', serif", letterSpacing: "0.05em" }}>The voice of Gwent</h1>
-        <input
-          type="text"
-          placeholder="Filter by card name..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ml-4"
-        />
+        <h1
+          className="text-2xl font-bold text-gray-800"
+          style={{
+            fontFamily: "'Cinzel', 'Playfair Display', 'Georgia', serif",
+            letterSpacing: "0.05em",
+          }}
+        >
+          The voice of Gwent
+        </h1>
+        <div className="flex items-center gap-4">
+          <div className="flex flex-nowrap bg-gray-100 rounded-md p-1 w-fit">
+            <button
+              onClick={() => setViewMode("all")}
+              className={`px-4 py-2 rounded text-sm font-medium transition-colors whitespace-nowrap ${
+                viewMode === "all"
+                  ? "bg-blue-500 text-white"
+                  : "text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              All Cards
+            </button>
+            <button
+              onClick={() => setViewMode("deck")}
+              className={`px-4 py-2 rounded text-sm font-medium transition-colors whitespace-nowrap ${
+                viewMode === "deck"
+                  ? "bg-blue-500 text-white"
+                  : "text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              My Deck ({deckCards.size})
+            </button>
+          </div>
+          <input
+            type="text"
+            placeholder="Filter by card name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
       </div>
       <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 print:gap-0 justify-items-center items-center w-fit mx-auto mt-8 print:ml-0 print:mt-0">
-        {filteredCards.slice(0, 300).map((card, idx) => (
+        {filteredCards.slice(0, 50).map((card, idx) => (
           <>
-            <AssembledCard key={card.id.card} card={card} />
+            <AssembledCard
+              key={card.id.card}
+              card={card}
+              isInDeck={deckCards.has(card.id.card)}
+              onAddToDeck={addToDeck}
+              onRemoveFromDeck={removeFromDeck}
+            />
             {(idx + 1) % 9 === 0 && (
               <div
                 key={`break-${idx}`}
