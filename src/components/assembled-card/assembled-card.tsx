@@ -34,47 +34,24 @@ const AssembledCard: React.FC<{
   }, [cardId]);
 
   return (
-    <div className="max-w-sm overflow-hidden p-6">
-      <h2 className="text-xl font-bold mb-2">{name}</h2>
-      <p className="text-sm text-gray-500 mb-2">{category}</p>
-      <div style={{ position: "relative", width: "100%" }}>
-        {imageUrls.map((url, idx) => (
-          <img
-            key={idx}
-            src={url}
-            alt={`Card art ${idx + 1}`}
-            style={{
-              width: "100%",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              zIndex: idx,
-              pointerEvents: "none", // optional: so only the top image is interactive
-            }}
-          />
-        ))}
-        {/* Render the top image again, but invisible and static, to set container height */}
-        {imageUrls.length > 0 && (
-          <img
-            src={imageUrls[imageUrls.length - 1]}
-            alt="Card art (height reference)"
-            style={{
-              width: "100%",
-              opacity: 0,
-              position: "static",
-              pointerEvents: "none",
-              display: "block",
-            }}
-            aria-hidden="true"
-          />
-        )}
-        <Overlay 
-          name={name} 
-          category={category}
-          ability_html={ability_html}
-          keyword_html={keyword_html}
+    <div className="relative w-[2.5in] h-[3.5in] border border-red-500 bg-black">
+      {imageUrls.map((url, idx) => (
+        <img
+          key={idx}
+          src={url}
+          alt={`Card art ${idx + 1}`}
+          className="w-full h-full object-contain absolute inset-0 pointer-events-none"
+          style={{
+            zIndex: idx,
+          }}
         />
-      </div>
+      ))}
+      <Overlay
+        name={name}
+        category={category}
+        ability_html={ability_html}
+        keyword_html={keyword_html}
+      />
     </div>
   );
 };
