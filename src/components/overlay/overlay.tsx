@@ -58,12 +58,6 @@ const Overlay: React.FC<{
                   dangerouslySetInnerHTML={{ __html: ability_html }}
                 />
               )}
-              {keyword_html && (
-                <div
-                  className="text-left"
-                  dangerouslySetInnerHTML={{ __html: keyword_html }}
-                />
-              )}
             </div>
           )}
         </div>
