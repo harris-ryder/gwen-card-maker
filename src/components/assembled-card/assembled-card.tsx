@@ -11,6 +11,9 @@ const AssembledCard: React.FC<{
 }> = ({ card, isInDeck, onAddToDeck, onRemoveFromDeck }) => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const [headerTextColor, setHeaderTextColor] = useState<"white" | "black">(
     "white"
   );
@@ -162,6 +165,8 @@ const AssembledCard: React.FC<{
         printColorAdjust: "exact",
       }}
       title={card.id.card}
+      onMouseEnter={() => setShowVideo(true)}
+      onMouseLeave={() => setShowVideo(false)}
     >
       {!imagesLoaded && isIntersecting && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
@@ -173,17 +178,46 @@ const AssembledCard: React.FC<{
           <div className="text-gray-500 text-sm">Loading...</div>
         </div>
       )}
-      {imagesLoaded && imageUrls.map((url, idx) => (
-        <img
-          key={idx}
-          src={url}
-          alt={`Card art ${idx + 1}`}
-          className="w-full h-full object-contain absolute inset-0 pointer-events-none print:object-contain group-hover:brightness-75 transition-all duration-200"
-          style={{
-            zIndex: idx,
+      {imagesLoaded && showVideo && (
+        <video
+          src={`https://gwent.one/video/card/loop/ob/${card.id.card}.webm`}
+          autoPlay
+          loop
+          playsInline
+          muted
+          className="w-full h-full object-contain absolute inset-0 pointer-events-none transition-opacity duration-200"
+          style={{ zIndex: 1 }}
+          onLoadedData={() => {
+            console.log(`Video loaded for card ${card.id.card}`);
+            setVideoLoaded(true);
+          }}
+          onError={(e) => {
+            console.log(`Video error for card ${card.id.card}:`, e);
+            setVideoError(true);
+          }}
+          onLoadStart={() => {
+            console.log(`Video loading started for card ${card.id.card}`);
           }}
         />
-      ))}
+      )}
+      {imagesLoaded &&
+        imageUrls.map((url, idx) => (
+          <img
+            key={idx}
+            src={url}
+            alt={`Card art ${idx + 1}`}
+            className={`w-full h-full object-contain absolute inset-0 pointer-events-none print:object-contain transition-all duration-200 ${
+              idx === 0
+                ? showVideo
+                  ? "opacity-0"
+                  : "group-hover:brightness-75"
+                : "group-hover:brightness-75"
+            }`}
+            style={{
+              zIndex: idx,
+            }}
+          />
+        ))}
       <Overlay
         name={card.name}
         category={card.category}
