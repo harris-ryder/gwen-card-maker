@@ -112,21 +112,20 @@ function App() {
               My Deck ({deckCards.size})
             </button>
           </div>
-          <div className="flex items-center gap-2">
-            <label className="text-sm font-medium text-gray-700">
-              Columns:
-            </label>
-            <select
-              value={columns}
-              onChange={(e) => setColumns(Number(e.target.value))}
-              className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-            >
-              {[1, 2, 3, 4, 5, 6].map((num) => (
-                <option key={num} value={num}>
-                  {num}
-                </option>
-              ))}
-            </select>
+          <div className="flex flex-nowrap bg-gray-100 rounded-md p-1 w-fit">
+            {[1, 2, 3, 4, 5, 6].map((num) => (
+              <button
+                key={num}
+                onClick={() => setColumns(num)}
+                className={`px-3 py-2 rounded text-sm font-medium transition-colors whitespace-nowrap ${
+                  columns === num
+                    ? "bg-blue-500 text-white"
+                    : "text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {num}
+              </button>
+            ))}
           </div>
           <input
             type="text"
@@ -150,11 +149,11 @@ function App() {
               onAddToDeck={addToDeck}
               onRemoveFromDeck={removeFromDeck}
             />
-            {(idx + 1) % 9 === 0 && (
+            {(idx + 1) % (columns * 3) === 0 && (
               <div
                 key={`break-${idx}`}
                 className="w-full col-span-full break-after-page print:break-after-page"
-                style={{ height: 0 }}
+                style={{ height: 0, gridColumn: `1 / -1` }}
               />
             )}
           </>
