@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Overlay from "../overlay/overlay";
 import type { ApiResponse } from "../../App";
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
+import { replaceWhitespaceWithUnderscores } from "./utils";
 
 const AssembledCard: React.FC<{
   card: ApiResponse;
@@ -74,6 +75,11 @@ const AssembledCard: React.FC<{
     }
   };
 
+  // When the card is clicked, log out the card object
+  const handleCardClick = () => {
+    console.log("Card object:", card);
+  };
+
   useEffect(() => {
     if (!isIntersecting) return;
 
@@ -114,9 +120,11 @@ const AssembledCard: React.FC<{
             );
           }
 
-          // Add provision banner URL
+          //   Add provision banner URL
           constructedUrls.push(
-            `https://gwent.one/image/gwent/assets/card/banner/medium/provision_${card.attributes.faction.toLowerCase()}.png`
+            `https://gwent.one/image/gwent/assets/card/banner/medium/provision_${replaceWhitespaceWithUnderscores(
+              card.attributes.faction.toLowerCase()
+            )}.png`
           );
 
           // Add provision number
@@ -135,7 +143,16 @@ const AssembledCard: React.FC<{
           // Add faction banner URL
           if (card.attributes.faction) {
             constructedUrls.push(
-              `https://gwent.one/image/gwent/assets/card/banner/medium/default_${card.attributes.faction.toLowerCase()}.png`
+              `https://gwent.one/image/gwent/assets/card/banner/medium/default_${replaceWhitespaceWithUnderscores(
+                card.attributes.faction.toLowerCase()
+              )}.png`
+            );
+          }
+
+          // Trinket type
+          if (card.attributes.power <= 0 && card.attributes.type) {
+            constructedUrls.push(
+              `https://gwent.one/img/assets/medium/other/trinket_${card.attributes.type.toLowerCase()}.png`
             );
           }
 
@@ -163,6 +180,7 @@ const AssembledCard: React.FC<{
         printColorAdjust: "exact",
       }}
       title={card.id.card}
+      onClick={handleCardClick}
       onMouseEnter={() => setShowVideo(true)}
       onMouseLeave={() => setShowVideo(false)}
     >
@@ -178,7 +196,7 @@ const AssembledCard: React.FC<{
       )}
       {imagesLoaded && showVideo && (
         <video
-          src={`https://gwent.one/video/card/loop/ob/${card.id.card}.webm`}
+          src={`https://gwent.one/video/card/premium/${card.id.card}.webm`}
           autoPlay
           loop
           playsInline
