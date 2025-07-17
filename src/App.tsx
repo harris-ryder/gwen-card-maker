@@ -33,6 +33,7 @@ function App() {
   const [viewMode, setViewMode] = useState<"all" | "deck">("all");
   const [deckCards, setDeckCards] = useState<Set<string>>(new Set());
   const [columns, setColumns] = useState(3);
+  const [pageBreakInterval, setPageBreakInterval] = useState(9);
 
   useEffect(() => {
     const savedDeck = localStorage.getItem("gwent-deck");
@@ -127,6 +128,17 @@ function App() {
               </button>
             ))}
           </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-[#f4e4bc] whitespace-nowrap">Page Break:</label>
+            <input
+              type="number"
+              min="1"
+              max="100"
+              value={pageBreakInterval}
+              onChange={(e) => setPageBreakInterval(Number(e.target.value))}
+              className="w-16 px-2 py-1 bg-[#3d2f1f] text-[#f4e4bc] border border-[#5d4e37] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37] text-sm"
+            />
+          </div>
           <input
             type="text"
             placeholder="Filter by card name..."
@@ -149,7 +161,7 @@ function App() {
               onAddToDeck={addToDeck}
               onRemoveFromDeck={removeFromDeck}
             />
-            {(idx + 1) % (columns * 3) === 0 && (
+            {(idx + 1) % pageBreakInterval === 0 && (
               <div
                 key={`break-${idx}`}
                 className="w-full col-span-full break-after-page print:break-after-page"
