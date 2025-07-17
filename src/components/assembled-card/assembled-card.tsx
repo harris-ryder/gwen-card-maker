@@ -85,7 +85,7 @@ const AssembledCard: React.FC<{
 
     // Fetch card data using the provided cardId
     fetch(
-      `https://api.gwent.one/?key=data&id=${card.id.card}&response=html&html=version.artsize.linkart&class=rounded&version=1.1.0`
+      `https://api.gwent.one/?key=data&id=${card.id.card}&response=html&html=version.artsize.linkart&class=rounded&version=8.4.0`
     )
       .then((response) => response.text())
       .then((html) => {
@@ -104,6 +104,7 @@ const AssembledCard: React.FC<{
 
         // If no images found, construct URLs from card attributes
         if (urls.length === 0) {
+          console.log("no images found");
           const constructedUrls: string[] = [];
 
           // Add art URL if available
@@ -150,7 +151,11 @@ const AssembledCard: React.FC<{
           }
 
           // Trinket type
-          if (card.attributes.power <= 0 && card.attributes.type) {
+          if (
+            card.attributes.power <= 0 &&
+            card.attributes.type &&
+            card.attributes.type.toLowerCase() !== "ability"
+          ) {
             constructedUrls.push(
               `https://gwent.one/img/assets/medium/other/trinket_${card.attributes.type.toLowerCase()}.png`
             );
@@ -231,10 +236,9 @@ const AssembledCard: React.FC<{
               zIndex:
                 url.includes("power") ||
                 url.includes("trinket") ||
-                url.includes("ability") ||
                 url.includes("default")
-                  ? 999
-                  : idx,
+                  ? 1000
+                  : idx + 1,
             }}
           />
         ))}
