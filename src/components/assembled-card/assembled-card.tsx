@@ -235,7 +235,7 @@ const AssembledCard: React.FC<{
             style={{
               zIndex:
                 url.includes("power") ||
-                url.includes("trinket") ||
+                (url.includes("trinket") && !url.includes("trinket_armor")) ||
                 url.includes("default")
                   ? 1000
                   : idx + 1,
