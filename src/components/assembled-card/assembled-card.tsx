@@ -228,7 +228,12 @@ const AssembledCard: React.FC<{
                 : "group-hover:brightness-75"
             }`}
             style={{
-              zIndex: idx,
+              zIndex:
+                url.includes("power") ||
+                url.includes("trinket") ||
+                url.includes("default")
+                  ? 999
+                  : idx,
             }}
           />
         ))}
@@ -240,10 +245,10 @@ const AssembledCard: React.FC<{
         categoryTextColor={categoryTextColor}
         descriptionTextColor={descriptionTextColor}
       />
-      <div className="absolute z-[9999] top-2 left-2 bg-black bg-opacity-80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+      <div className="absolute z-[9997] top-2 left-2 bg-black bg-opacity-80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
         {card.id.card}
       </div>
-      <div className="absolute z-[99999] top-2 right-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div className="absolute z-[9998] top-2 right-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <button
           onClick={handleDeckToggle}
           className={`px-2 py-1 rounded text-xs font-medium transition-colors cursor-pointer ${

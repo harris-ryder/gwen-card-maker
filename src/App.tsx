@@ -78,7 +78,7 @@ function App() {
 
   return (
     <>
-      <div className="sticky top-0 bg-white p-4 shadow-md z-100 print:hidden flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div className="sticky top-0 bg-white p-4 shadow-md z-[9999] print:hidden flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <h1
           className="text-2xl font-bold text-gray-800 text-center lg:text-left"
           style={{
