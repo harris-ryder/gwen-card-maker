@@ -37,9 +37,9 @@ const Overlay: React.FC<{
             printColorAdjust: "exact",
             fontFamily: "'Cinzel', 'Playfair Display', 'Georgia', serif",
             letterSpacing: "0.05em",
-            paddingLeft: name.length > 12 ? "65px" : undefined,
-            textAlign: name.length > 12 ? "left" : undefined,
-            fontSize: name.length > 19 ? "11px" : undefined,
+            paddingLeft: name.length > 10 ? "68px" : undefined,
+            textAlign: name.length > 10 ? "left" : undefined,
+            fontSize: name.length > 19 ? "10px" : undefined,
           }}
         >
           {name}
