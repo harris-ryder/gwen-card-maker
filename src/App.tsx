@@ -32,6 +32,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"all" | "deck">("all");
   const [deckCards, setDeckCards] = useState<Set<string>>(new Set());
+  const [columns, setColumns] = useState(3);
 
   useEffect(() => {
     const savedDeck = localStorage.getItem("gwent-deck");
@@ -111,6 +112,22 @@ function App() {
               My Deck ({deckCards.size})
             </button>
           </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-gray-700">
+              Columns:
+            </label>
+            <select
+              value={columns}
+              onChange={(e) => setColumns(Number(e.target.value))}
+              className="px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            >
+              {[1, 2, 3, 4, 5, 6].map((num) => (
+                <option key={num} value={num}>
+                  {num}
+                </option>
+              ))}
+            </select>
+          </div>
           <input
             type="text"
             placeholder="Filter by card name..."
@@ -120,7 +137,10 @@ function App() {
           />
         </div>
       </div>
-      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 print:gap-0 justify-items-center items-center w-fit mx-auto mt-8 print:ml-0 print:mt-0">
+      <div
+        className={`grid gap-4 print:gap-0 justify-items-center items-center w-fit mx-auto mt-8 print:ml-0 print:mt-0`}
+        style={{ gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+      >
         {filteredCards.map((card, idx) => (
           <>
             <AssembledCard
