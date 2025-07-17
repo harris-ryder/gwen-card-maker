@@ -6,3 +6,7 @@
     break-after: page;
   }
 }
+
+body {
+  background-color: rgba(103, 80, 36, 0.65);
+  }

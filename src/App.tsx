@@ -79,9 +79,9 @@ function App() {
 
   return (
     <>
-      <div className="sticky top-0 bg-white p-4 shadow-md z-[9999] print:hidden flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <div className="sticky top-0 p-4 bg-[#675024] shadow-md z-[9999] print:hidden flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <h1
-          className="text-2xl font-bold text-gray-800 text-center lg:text-left"
+          className="text-2xl font-bold text-[#f4e4bc] text-center lg:text-left"
           style={{
             fontFamily: "'Cinzel', 'Playfair Display', 'Georgia', serif",
             letterSpacing: "0.05em",
@@ -90,13 +90,13 @@ function App() {
           The voice of Gwent
         </h1>
         <div className="flex flex-col sm:flex-row items-center gap-4">
-          <div className="flex flex-nowrap bg-gray-100 rounded-md p-1 w-fit">
+          <div className="flex flex-nowrap bg-[#3d2f1f] rounded-md p-1 w-fit">
             <button
               onClick={() => setViewMode("all")}
               className={`px-4 py-2 rounded text-sm font-medium transition-colors whitespace-nowrap ${
                 viewMode === "all"
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-700 hover:bg-gray-200"
+                  ? "bg-[#d4af37] text-[#2d1810]"
+                  : "text-[#f4e4bc] hover:bg-[#4d3f2f]"
               }`}
             >
               All Cards
@@ -105,22 +105,22 @@ function App() {
               onClick={() => setViewMode("deck")}
               className={`px-4 py-2 rounded text-sm font-medium transition-colors whitespace-nowrap ${
                 viewMode === "deck"
-                  ? "bg-blue-500 text-white"
-                  : "text-gray-700 hover:bg-gray-200"
+                  ? "bg-[#d4af37] text-[#2d1810]"
+                  : "text-[#f4e4bc] hover:bg-[#4d3f2f]"
               }`}
             >
               My Deck ({deckCards.size})
             </button>
           </div>
-          <div className="flex flex-nowrap bg-gray-100 rounded-md p-1 w-fit">
+          <div className="flex flex-nowrap bg-[#3d2f1f] rounded-md p-1 w-fit">
             {[1, 2, 3, 4, 5, 6].map((num) => (
               <button
                 key={num}
                 onClick={() => setColumns(num)}
                 className={`px-3 py-2 rounded text-sm font-medium transition-colors whitespace-nowrap ${
                   columns === num
-                    ? "bg-blue-500 text-white"
-                    : "text-gray-700 hover:bg-gray-200"
+                    ? "bg-[#d4af37] text-[#2d1810]"
+                    : "text-[#f4e4bc] hover:bg-[#4d3f2f]"
                 }`}
               >
                 {num}
@@ -132,7 +132,7 @@ function App() {
             placeholder="Filter by card name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full max-w-md px-4 py-2 bg-[#3d2f1f] text-[#f4e4bc] placeholder-[#a89568] border border-[#5d4e37] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-[#d4af37]"
           />
         </div>
       </div>
