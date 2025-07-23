@@ -88,12 +88,6 @@ const Overlay: React.FC<{
           )}
         </div>
       </div>
-      <div
-        className="absolute inset-0 flex items-center justify-center text-white/70 text-2xl font-mono pointer-events-none select-none"
-        style={{ zIndex: 9999 }}
-      >
-        @threejser
-      </div>
     </div>
   );
 };
